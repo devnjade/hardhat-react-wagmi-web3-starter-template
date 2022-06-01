@@ -7,6 +7,10 @@ import {
   useNetwork
 } from "wagmi";
 import styles from './index.module.scss';
+import { Buffer } from 'buffer';
+
+Buffer.from('anything', 'base64');
+window.Buffer = window.Buffer || require('buffer').Buffer;
 
 const App: React.FC = () => {
   const { connect, connectors, error, isConnecting, pendingConnector } = useConnect();
@@ -41,9 +45,13 @@ const App: React.FC = () => {
             <button onClick={() => disconnect()}>Disconnect Wallet</button>
           </div>
       }
-      <p>Account: {accountData?.address}</p>
-      <p>Balance: {balanceData?.formatted} {balanceData?.symbol}</p>
-      <p>Network: {activeChain?.name}</p>
+      {accountData?.address && 
+        <div>
+          <p>Account: {accountData?.address}</p>
+          <p>Balance: {balanceData?.formatted} {balanceData?.symbol}</p>
+          <p>Network: {activeChain?.name}</p>
+        </div>
+      }
     </main>
   );
 }
